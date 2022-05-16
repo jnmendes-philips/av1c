@@ -12,15 +12,6 @@
     <%
         ArrayList<Pessoa> pessoas = (ArrayList<Pessoa>) request.getAttribute("pessoas");
     %>
-        <select name="pessoas" id="pessoas">
-    <%
-        for (Pessoa pessoa : pessoas) {
-    %>
-            <option value="<%=pessoa.getNome()%>"><%=pessoa.getNome()%></option>
-    <%
-        }
-    %>
-        </select>
         <table>
             <thead>
                 <tr>
@@ -28,6 +19,7 @@
                     <th colspan="1">nome</th>
                     <th colspan="1">email</th>
                     <th colspan="1">peso</th>
+                    <th colspan="1">cargo</th>
                 </tr>
             </thead>
             <tbody>
@@ -39,6 +31,7 @@
             <td><%=pessoa.getNome()%></td>
             <td><%=pessoa.getEmail()%></td>
             <td><%=pessoa.getPeso()%></td>
+            <td><%=pessoa.getCargo().getNome()%></td>
             </tr>
     <%
         }

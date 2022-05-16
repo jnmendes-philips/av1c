@@ -1,4 +1,6 @@
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page contentType="text/html" pageEncoding="UTF-8"
+        import="java.util.*"
+        import="ifc.edu.br.mv9webhib.model.*"%>
 <!DOCTYPE html>
 <html>
     <head>
@@ -10,6 +12,18 @@
             Nome: <input type="text" name="nome"> <br>
             Email: <input type="text" name="email"> <br>
             Peso: <input type="text" name="peso"> <br>
+            Cargo: 
+        <select name="cargos">
+    <%
+        ArrayList<Cargo> cargos = (ArrayList<Cargo>) request.getAttribute("cargos");
+        for (Cargo cargo : cargos) {
+    %>
+            <option value="<%=cargo.getId()%>"><%=cargo.getNome()%></option>
+    <%
+        }
+    %>
+        </select> <br>
+            <input type="hidden" name="parent" value="pessoa">
             <input type="submit" value="Cadastrar">
         </form>
         <a href="index.html">Retornar ao início</a>

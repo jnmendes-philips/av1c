@@ -8,6 +8,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
 
@@ -19,10 +20,20 @@ public class Pessoa {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "pgm4_hylson_pessoa_seq")
     @SequenceGenerator(name = "pessoa_seq", initialValue = 1)
     private Long id;
+    
+    @ManyToOne()
+    Cargo cargo;
 
     private String nome;
     private String email;
     private Float peso;
+
+    public Pessoa(Cargo cargo, String nome, String email, Float peso) {
+        this.cargo = cargo;
+        this.nome = nome;
+        this.email = email;
+        this.peso = peso;
+    }
 
     public Pessoa(String nome, String email, Float peso) {
         this.nome = nome;
@@ -68,6 +79,14 @@ public class Pessoa {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public Cargo getCargo() {
+        return cargo;
+    }
+
+    public void setCargo(Cargo cargo) {
+        this.cargo = cargo;
     }
 
 }

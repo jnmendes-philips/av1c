@@ -5,6 +5,7 @@
 package ifc.edu.br.mv9webhib.control;
 
 import ifc.edu.br.mv9webhib.dao.DAO;
+import ifc.edu.br.mv9webhib.model.Cargo;
 import ifc.edu.br.mv9webhib.model.Pessoa;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -48,8 +49,15 @@ public class Geral extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
-        request.setAttribute("pessoas", dao.consultar());
-        getServletContext().getRequestDispatcher("/listar.jsp").forward(request, response);
+        if (request.getParameter("visualizar") != null) {
+            request.setAttribute("pessoas", dao.consultarPessoas());
+            getServletContext().getRequestDispatcher("/listar.jsp").forward(request, response);
+        } else if (request.getParameter("cadastroPessoa") != null) {
+            request.setAttribute("cargos", dao.consultarCargos());
+            getServletContext().getRequestDispatcher("/cadastro.jsp").forward(request, response);
+        } else if (request.getParameter("cadastroCargo") != null) {
+            getServletContext().getRequestDispatcher("/cadastroCargo.jsp").forward(request, response);
+        }
     }
 
     /**
@@ -64,11 +72,18 @@ public class Geral extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
-        Pessoa p = new Pessoa();
-        p.setNome(request.getParameter("nome"));
-        p.setEmail(request.getParameter("email"));
-        p.setPeso(validaFloat(request.getParameter("peso")));
-        dao.inserir(p);
+        if ("pessoa".equals(request.getParameter("parent"))) {
+            Pessoa p = new Pessoa();
+            p.setNome(request.getParameter("nome"));
+            p.setEmail(request.getParameter("email"));
+            p.setPeso(validaFloat(request.getParameter("peso")));
+            p.setCargo(dao.consultarCargo(validaLong(request.getParameter("cargos"))));
+            dao.inserirPessoa(p);
+        } else if ("cargo".equals(request.getParameter("parent"))) {
+            Cargo c = new Cargo();
+            c.setNome(request.getParameter("nome"));
+            dao.inserirCargo(c);    
+        }
         request.setAttribute("msg", "Cadastro realizado com sucesso!");
         getServletContext().getRequestDispatcher("/mensagem.jsp").forward(request, response);
     }
@@ -78,6 +93,14 @@ public class Geral extends HttpServlet {
             return Float.parseFloat(s);
         } catch(Exception e) {
             return 0F;
+        }
+    }
+    
+    private Long validaLong(String s) {
+        try {
+            return Long.parseLong(s);
+        } catch(Exception e) {
+            return 0L;
         }
     }
 
