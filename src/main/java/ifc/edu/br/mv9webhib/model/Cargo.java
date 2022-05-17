@@ -16,11 +16,11 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-@Table(name = "pgm4_hylson_cargo")
+@Table(name = "pgm4_jeffersonmendes_cargo")
 public class Cargo {
     
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "pgm4_hylson_cargo_seq")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "pgm4_jeffersonmendes_cargo_seq")
     @SequenceGenerator(name = "cargo_seq", initialValue = 1)
     private Long id;
     

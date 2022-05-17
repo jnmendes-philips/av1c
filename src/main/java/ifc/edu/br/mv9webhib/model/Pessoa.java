@@ -13,11 +13,11 @@ import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "pgm4_hylson_pessoa")
+@Table(name = "pgm4_jeffersonmendes_pessoa")
 public class Pessoa {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "pgm4_hylson_pessoa_seq")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "pgm4_jeffersonmendes_pessoa_seq")
     @SequenceGenerator(name = "pessoa_seq", initialValue = 1)
     private Long id;
     
